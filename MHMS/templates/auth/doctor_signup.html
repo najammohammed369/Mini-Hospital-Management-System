@@ -1,0 +1,33 @@
+<h2>Doctor Signup</h2>
+
+{% if error %}
+<p style="color:red">{{ error }}</p>
+{% endif %}
+
+<form method="POST">
+    {% csrf_token %}
+
+    <label>Full Name</label><br>
+    <input type="text" name="name" required><br><br>
+
+    <label>Email</label><br>
+    <input type="email" name="email" required><br><br>
+
+    <label>Password</label><br>
+    <input type="password" name="password" required><br><br>
+
+    <label>Department</label><br>
+    <select name="department" required>
+        <option value="">-- Select Department --</option>
+        {% for dept in departments %}
+            <option value="{{ dept.id }}">{{ dept.name }}</option>
+        {% endfor %}
+    </select><br><br>
+
+    <button type="submit">Sign Up</button>
+</form>
+
+<p>
+    Already have an account?
+    <a href="{% url 'doctor_login' %}">Login</a>
+</p>

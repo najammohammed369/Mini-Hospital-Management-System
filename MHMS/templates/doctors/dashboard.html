@@ -1,0 +1,97 @@
+<h1>Doctor Dashboard</h1>
+
+<p>
+    Welcome Dr. {{ request.user.name }} <br>
+    <strong>Department:</strong> {{ request.user.department.name }}
+</p>
+
+<hr>
+
+<h3>Click <a href="{% url 'add_availability' %}">here</a> to add new slot</h3>
+
+<hr>
+
+<h3>Upcoming Slots</h3>
+
+{% if upcoming_slots %}
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Action</th>
+    </tr>
+    {% for slot in upcoming_slots %}
+    <tr>
+        <td>{{ slot.date }}</td>
+        <td>{{ slot.start_time }}</td>
+        <td>{{ slot.end_time }}</td>
+        <td>
+    {% if not s.is_booked %}
+    <a href="{% url 'delete_availability' slot.id %}"
+       onclick="return confirm('Are you sure you want to delete this slot?');">
+       Delete
+    </a>
+    {% else %}
+       --
+    {% endif %}
+</td>
+
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No upcoming slots</p>
+{% endif %}
+
+<hr>
+
+<h3>Upcoming Appointments</h3>
+
+{% if upcoming_appointments %}
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+    </tr>
+    {% for slot in upcoming_appointments %}
+    <tr>
+        <td>{{ slot.date }}</td>
+        <td>{{ slot.start_time }}</td>
+        <td>{{ slot.end_time }}</td>
+        <td>Booked</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No upcoming appointments</p>
+{% endif %}
+
+<hr>
+
+<h3>Past Unbooked Slots</h3>
+
+{% if past_unbooked_slots %}
+<table border="1">
+    <tr>
+        <th>Date</th>
+        <th>Start</th>
+        <th>End</th>
+        <th>Status</th>
+    </tr>
+    {% for slot in past_unbooked_slots %}
+    <tr>
+        <td>{{ slot.date }}</td>
+        <td>{{ slot.start_time }}</td>
+        <td>{{ slot.end_time }}</td>
+        <td>UnBooked</td>
+    </tr>
+    {% endfor %}
+</table>
+{% else %}
+<p>No past unused slots</p>
+{% endif %}
+
+
